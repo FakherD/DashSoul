@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  user_web:
+    build: 
+      context: ./user
+      dockerfile: Dockerfile
+    command: bash -c "python3 ./user/manage.py makemigrations && python3 ./user/manage.py migrate && python3 ./user/manage.py runserver 0.0.0.0:8001"
+    volumes:
+      - .:/app
+    ports:
+      - 8001:8001
+    restart: always
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=root
+      - POSTGRES_DB=users
+
+
+  nginx:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+    links:
+      - user_web
+    depends_on:
+      - user_web
+
+volumes:
+  postgres_data:
+
