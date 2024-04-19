@@ -5,6 +5,7 @@ from .serializers import ProfileSerializer
 from .models import Profile
 import jwt
 from datetime import datetime, timedelta
+from .middleware import UserNotFoundException, IncorrectPasswordException
 
 # Create your views here.
 
@@ -22,16 +23,16 @@ class LoginView(APIView):
 
         profile = Profile.objects.filter(emailaddress=emailaddress).first()
 
-        if profile is None:
-            raise AuthenticationFailed('User not found')
+        if not profile:
+            raise UserNotFoundException()
 
         if not profile.check_password(password):
-            raise AuthenticationFailed('Incorrect Password')
+            raise IncorrectPasswordException()
 
         payload = {
             'id': profile.id,
-            'exp': datetime.utcnow() + timedelta(minutes=60),  # Corrected
-            'iat': datetime.utcnow()  # Corrected
+            'exp': datetime.utcnow() + timedelta(minutes=60), 
+            'iat': datetime.utcnow()  
         }
 
         token = jwt.encode(payload, 'secret', algorithm='HS256')
