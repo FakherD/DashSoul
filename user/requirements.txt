@@ -1,7 +1,6 @@
 Django
 djangorestframework
 djongo
-psycopg2
 psycopg2-binary
 gunicorn
 requests
@@ -11,3 +10,5 @@ phonenumbers
 djoser
 PyJWT
 django-cors-headers
+drf_yasg
+dos2unix

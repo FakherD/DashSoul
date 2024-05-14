@@ -23,9 +23,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-$9ruhnx*rfe^%75cqgk#il3d9&0znwq=@rl+ys)3m$_5j&zs=d'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'django-service.default.svc.cluster.local',
+    'localhost',
+    '127.0.0.1',
+    '[::1]'  # IPv6 address for localhost
+]
 
 
 # Application definition
@@ -88,7 +93,7 @@ DATABASES = {
         'NAME': 'users',
         'USER': 'root',
         'PASSWORD': 'root',
-        'HOST': 'localhost',  # This should match the service name in your Docker Compose file
+        'HOST': 'db',  # This should match the service name in your Docker Compose file
         'PORT': '5432',  # Default PostgreSQL port
     }
 }
@@ -115,9 +120,9 @@ LOGGING = {
             'level': 'ERROR',
             'propagate': True,
         },
-        # Configure other application-specific loggers below
     },
 }
+
 
 
 # Password validation
