@@ -15,6 +15,9 @@ WORKDIR /app
 # Copy the current context into the /app directory in the container
 COPY . .
 
+# List the directory contents for debugging
+RUN ls -R /app
+
 # Convert all .py files to Unix-style line endings
 RUN find . -type f -name "*.py" -exec dos2unix {} \;
 
