@@ -14,8 +14,17 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: List directory structure for debugging
-      run: ls -R
+    - name: List directory structure
+      run: |
+        echo "Listing directory structure for debugging:"
+        ls -R
+
+    - name: Verify important files
+      run: |
+        echo "Verifying manage.py exists"
+        test -f user/user/manage.py && echo "manage.py found" || echo "manage.py not found"
+        echo "Verifying requirements.txt exists"
+        test -f user/user/requirements.txt && echo "requirements.txt found" || echo "requirements.txt not found"
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
