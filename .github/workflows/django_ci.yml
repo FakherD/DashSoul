@@ -14,7 +14,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
 
-    - name: List directory structure
+    - name: List directory structure for debugging
       run: |
         echo "Listing directory structure for debugging:"
         ls -R
