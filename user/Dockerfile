@@ -18,9 +18,7 @@ COPY . .
 # Convert all .py files to Unix-style line endings
 RUN find . -type f -name "*.py" -exec dos2unix {} \;
 
-# Fix shebang lines
-RUN sed -i 's/\r$//' ./manage.py
-RUN sed -i 's/\r$//' ./user/wsgi.py
+
 
 # Uninstall any existing psycopg2 packages
 RUN pip uninstall -y psycopg2 psycopg2-binary
